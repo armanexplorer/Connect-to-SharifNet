@@ -1,19 +1,42 @@
 import requests
 import argparse
 
-# Instantiate the parser
-parser = argparse.ArgumentParser(description='Optional app description')
 
-# Required positional argument
-parser.add_argument('sharif_usr', type=str,
-                    help='A required integer positional argument')
-                    
-# Required positional argument
-parser.add_argument('sharif_pass', type=str,
-                    help='A required integer positional argument')
+username , password = None, None
 
-args = parser.parse_args()
+try:
+    with open(".env", "r") as f:
+        r1, r2 = f.readlines()
+        username = r1.split("=")[-1]
+        password = r2.split("=")[-1]
+except FileNotFoundError:
+    pass
+except Exception:
+    pass
+else:
+    print("Read from .env")
+    
+if username is None or password is None:
+    # Instantiate the parser
+    parser = argparse.ArgumentParser(description='Optional app description')
 
+    # Required positional argument
+    parser.add_argument('sharif_usr', type=str,
+                        help='A required integer positional argument')
+                        
+    # Required positional argument
+    parser.add_argument('sharif_pass', type=str,
+                        help='A required integer positional argument')
+
+    args = parser.parse_args()
+
+    if not args:
+        exit("You should pass both Username and Password from .bat on .env file")
+        
+    username , password = args.sharif_usr, args.sharif_pass
+    
+    print("read from hard coded")
+ 
 
 headers = {
     'Origin': 'https://net2.sharif.edu',
@@ -28,8 +51,8 @@ headers = {
 }
 
 data = {
-    'username': args.sharif_usr,
-    'password': args.sharif_pass,
+    'username': username,
+    'password': password,
 }
 
 response = requests.post('https://net2.sharif.edu/login', headers=headers, data=data)
