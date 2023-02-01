@@ -6,9 +6,10 @@ username , password = None, None
 
 try:
     with open(".env", "r") as f:
-        r1, r2 = f.readlines()
-        username = r1.split("=")[-1]
-        password = r2.split("=")[-1]
+        l1, l2 = f.readlines()
+        username = l1.strip().split("=")[-1]
+        password = l2.strip().split("=")[-1]
+    
 except FileNotFoundError:
     pass
 except Exception:
