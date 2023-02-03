@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
-import requests
 import argparse
+from urllib.error import HTTPError, URLError
+from urllib.request import urlopen, Request
+from urllib.parse import urlencode
 
 CRED_PATH = 'credentials.txt'
+LOGIN_URL = 'https://net2.sharif.edu/login'
 
 username , password = None, None
 
@@ -60,11 +63,25 @@ data = {
     'password': password,
 }
 
-response = requests.post('https://net2.sharif.edu/login', headers=headers, data=data)
+response = None
+data = urlencode(data).encode("utf-8")
+
+request = Request(LOGIN_URL, headers=headers or {}, data=data)
+
+try:
+    with urlopen(request, timeout=10) as response:
+        response = response.read().decode("utf-8")
+except HTTPError as error:
+    print(error.status, error.reason)
+except URLError as error:
+    print(error.reason)
+except TimeoutError:
+    print("Request timed out")
+    
 
 if not response:
     print("UNKNOWN ERROR: No Response!")
-elif "You are logged in" in response.text:
+elif "You are logged in" in response:
     print("Done! (The IP Assigned Successfully)")
 else:
     print(f"Login Failed! Please check your username and password")
