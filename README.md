@@ -1,13 +1,18 @@
 # Sharif Connect
-Conenct to Sharif networks with one click/command in Windows/Linux.
+Conenct to Sharif networks automatically in all platforms.
 
-# Install and Run
-1. Downlaod last release and extract it.
+# Setup & Run
+After downlaoding the [last release](https://github.com/armanexplorer/Sharif-Connect/releases/latest) and extracting it, you will have two choices:
 
-2. Open the `credentials.txt` and edit the `username` and `password` lines.
+## Bash-based / Batch-based (Recommended)
+1. For Windows / Linux, open `connect.bat` / `connect.sh` file accordingly and edit the username and password lines based on your account information.
 
-3. Make sure you are connected to one of the Sharif networks.
+2. Run updated file (the `.sh` file should get the execute permission using `chmod u+x connect.sh`)
 
-4. For run in Windows, just double click `sharif_connect.bat` file, and for Linux, run `./sharif_connect.py` in terminal.
 
-5. Done!
+## Python-based
+1. Install `python3`
+
+2. Open the `credentials.txt` file and edit the username and password lines
+
+3. For run in Windows, just double click `sharif_connect.bat` file, and for Linux, run `./sharif_connect.py` in terminal (after adding execute permission using `chmod u+x sharif_connect.py`)
